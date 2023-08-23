@@ -33,10 +33,12 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('id', 'username', 'first_name', 'last_name', 'bio', 'profile_pic')
+        fields = ('id', 'username', 'first_name', 'last_name', 'bio', 'profile_pic', 'email')
         read_only_fields = ('username', )
 
 class ClientSerializer(serializers.ModelSerializer):
+    createdAt = serializers.DateTimeField(source='created_at', required=False)
     class Meta:
         model = Client
-        fields = ('id', 'name', 'number', 'created_at', 'clerk')
+        fields = ('id', 'name', 'number', 'createdAt', 'clerk')
+        # read_only_fields = ('created_at',)

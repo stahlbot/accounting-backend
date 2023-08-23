@@ -17,6 +17,17 @@ class ClientsViewSet(viewsets.ModelViewSet):
     queryset = Client.objects.all()
     serializer_class = ClientSerializer
 
+    # def create(self, request, *args, **kwargs):
+    #     print(request.data)
+    #     serializer = self.serializer_class(data=request.data)
+
+    #     if serializer.is_valid():
+    #         print(serializer.data)
+    #     else:
+    #         print(serializer.errors)
+
+
+
 # class UserLogIn(ObtainAuthToken):
 
 #     def post(self, request, *args, **kwargs):
