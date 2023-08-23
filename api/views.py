@@ -4,8 +4,8 @@ from rest_framework.permissions import IsAuthenticated
 # from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 
-from .models import User
-from .serializers import UserSerializer
+from .models import User, Client
+from .serializers import UserSerializer, ClientSerializer
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -13,6 +13,9 @@ class UserViewSet(viewsets.ModelViewSet):
     serializer_class = UserSerializer
     # permission_classes = [IsAuthenticated]
 
+class ClientsViewSet(viewsets.ModelViewSet):
+    queryset = Client.objects.all()
+    serializer_class = ClientSerializer
 
 # class UserLogIn(ObtainAuthToken):
 

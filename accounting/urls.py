@@ -4,14 +4,16 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.views.generic.base import RedirectView
 from rest_framework.routers import DefaultRouter
-from api.views import UserViewSet#, UserLogIn
+from api.views import UserViewSet, ClientsViewSet
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
+    TokenVerifyView
 )
 
 router = DefaultRouter()
 router.register(r'users', UserViewSet)
+router.register(r'clients', ClientsViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -22,6 +24,7 @@ urlpatterns = [
     # URL for JWT token authentication
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('api/token/verify/', TokenVerifyView.as_view(), name='token_verify'),
 
     re_path(r'^$', RedirectView.as_view(url=reverse_lazy('api-root'), permanent=False)),
 ] #+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

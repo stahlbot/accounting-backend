@@ -15,8 +15,16 @@ class User(AbstractUser):
         return self.username
     
 
+class Client(models.Model):
+    name = models.CharField(max_length=128)
+    number = models.IntegerField()
+    created_at = models.DateTimeField()
+    clerk = models.ForeignKey('User', on_delete=models.PROTECT)
+    # legalform = 
+    # bookings = 
+    # accounts =
+    # kontenrahmen
+    # address
 
-# @receiver(post_save, sender=settings.AUTH_USER_MODEL)
-# def create_auth_token(sender, instance=None, created=False, **kwargs):
-#     if created:
-#         Token.objects.create(user=instance)
+    def __str__(self) -> str:
+        return f"{self.name} ({self.number})"
