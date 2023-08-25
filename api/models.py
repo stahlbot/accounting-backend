@@ -28,3 +28,12 @@ class Client(models.Model):
 
     def __str__(self) -> str:
         return f"{self.name} ({self.number})"
+    
+
+class AccountChart(models.Model):
+    name = models.CharField(max_length=128)
+    is_template = models.BooleanField(default=False)
+    client = models.OneToOneField(Client, on_delete=models.CASCADE, null=True, default=None)
+
+    def __str__(self):
+        return self.name

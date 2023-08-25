@@ -4,7 +4,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.views.generic.base import RedirectView
 from rest_framework.routers import DefaultRouter
-from api.views import UserViewSet, ClientsViewSet
+from api.views import AccountChartViewSet, UserViewSet, ClientsViewSet
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
@@ -14,6 +14,7 @@ from rest_framework_simplejwt.views import (
 router = DefaultRouter()
 router.register(r'users', UserViewSet)
 router.register(r'clients', ClientsViewSet)
+router.register(r'account-charts', AccountChartViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),

@@ -3,9 +3,10 @@ from rest_framework.permissions import IsAuthenticated
 # from rest_framework.authtoken.views import ObtainAuthToken
 # from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
+from rest_framework.decorators import action
 
-from .models import User, Client
-from .serializers import UserSerializer, ClientSerializer
+from .models import AccountChart, User, Client
+from .serializers import AccountChartSerializer, UserSerializer, ClientSerializer
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -25,6 +26,25 @@ class ClientsViewSet(viewsets.ModelViewSet):
     #         print(serializer.data)
     #     else:
     #         print(serializer.errors)
+
+
+class AccountChartViewSet(viewsets.ModelViewSet):
+    queryset = AccountChart.objects.all()
+    serializer_class = AccountChartSerializer
+
+    @action(detail=False, methods=['GET'])
+    def templates(self, request):
+        templates = self.queryset.filter(is_template=True)
+        serializer = self.get_serializer(templates, many=True)
+        return Response(serializer.data)
+
+    @action(detail=True, methods=['GET'])
+    def client_account_chart(self, request, pk=None):
+        account_chart = self.get_object()
+        if not account_chart.is_template and account_chart.client:
+            serializer = self.get_serializer(account_chart.client)
+            return Response(serializer.data)
+        return Response(status=404)
 
 
 
