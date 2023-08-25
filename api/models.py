@@ -44,6 +44,21 @@ class Account(models.Model):
     number = models.IntegerField(default=0)
     non_deductible_tax = models.BooleanField(default=False)
     account_chart = models.ForeignKey('AccountChart', on_delete=models.CASCADE, null=True)
+    category = models.ForeignKey('Category', on_delete=models.PROTECT, null=True, default=None)
 
     def __str__(self):
         return self.name
+    
+class Category(models.Model):
+    BALANCE = "BA"
+    PROFIT_LOSS = "PL"
+    DOCUMENT_CHOICES = [
+        (BALANCE, "Balance"),
+        (PROFIT_LOSS, "Profit and Loss")
+    ]
+
+    name = models.CharField(max_length=1024)
+    document = models.CharField(max_length=2, choices=DOCUMENT_CHOICES, default=BALANCE)
+
+    def __str__(self):
+        return f"{self.document}: {self.name}"
