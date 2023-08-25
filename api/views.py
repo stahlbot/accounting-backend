@@ -47,6 +47,10 @@ class AccountChartViewSet(viewsets.ModelViewSet):
         return Response(status=404)
 
 
+class ClientAccountChartViewSet(viewsets.ModelViewSet):
+    def get_queryset(self):
+        return AccountChart.objects.filter(client=self.kwargs['client_pk'])
+    serializer_class = AccountChartSerializer
 
 # class UserLogIn(ObtainAuthToken):
 

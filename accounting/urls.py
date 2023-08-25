@@ -4,21 +4,26 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.views.generic.base import RedirectView
 from rest_framework.routers import DefaultRouter
-from api.views import AccountChartViewSet, UserViewSet, ClientsViewSet
+from api.views import AccountChartViewSet, UserViewSet, ClientsViewSet, ClientAccountChartViewSet
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
     TokenVerifyView
 )
+from rest_framework_nested import routers
 
 router = DefaultRouter()
 router.register(r'users', UserViewSet)
 router.register(r'clients', ClientsViewSet)
 router.register(r'account-charts', AccountChartViewSet)
 
+client_account_charts_router = routers.NestedSimpleRouter(router, r'clients', lookup='client')
+client_account_charts_router.register(r'account-charts', ClientAccountChartViewSet, basename='client-account-charts')
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1/', include(router.urls)),
+    path('api/v1/', include(client_account_charts_router.urls)),
     # path('api-user-login/', UserLogIn.as_view()),
     # path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 
