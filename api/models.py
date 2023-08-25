@@ -37,3 +37,13 @@ class AccountChart(models.Model):
 
     def __str__(self):
         return self.name
+    
+
+class Account(models.Model):
+    name =  models.CharField(max_length=128, default="Default")
+    number = models.IntegerField(default=0)
+    non_deductible_tax = models.BooleanField(default=False)
+    account_chart = models.ForeignKey('AccountChart', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name

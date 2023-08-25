@@ -5,7 +5,7 @@ from django.contrib.auth.models import update_last_login
 
 # from rest_framework_simplejwt.views import TokenObtainPairView
 
-from .models import AccountChart, User, Client
+from .models import Account, AccountChart, User, Client
 
 # Overwrite simple jwt ObtainPairSerializer to include the id and name of the user after authentication
 class MyTokenObtainPairSerializer(TokenObtainSerializer):
@@ -52,6 +52,13 @@ class AccountChartSerializer(serializers.ModelSerializer):
     class Meta:
         model = AccountChart
         fields = ('id', 'name', 'isTemplate', 'client')
+
+
+class AccountSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Account
+        fields = ('id', 'name', 'number', 'account_chart')
 
 
 # class OptionalPrimaryKeyRelatedField(serializers.PrimaryKeyRelatedField):
