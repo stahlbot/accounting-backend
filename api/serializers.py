@@ -38,10 +38,10 @@ class UserSerializer(serializers.ModelSerializer):
 
 class ClientSerializer(serializers.ModelSerializer):
     createdAt = serializers.DateTimeField(source='created_at', required=False)
-    accountChart = serializers.PrimaryKeyRelatedField(source="accountchart.id", queryset=Client.objects.all())
+    # accountChart = serializers.PrimaryKeyRelatedField(source="accountchart.id", queryset=Client.objects.all())
     class Meta:
         model = Client
-        fields = ('id', 'name', 'number', 'createdAt', 'clerk', "accountChart")
+        fields = ('id', 'name', 'number', 'createdAt', 'clerk')
         # read_only_fields = ('created_at',)
 
 
