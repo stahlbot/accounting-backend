@@ -1,4 +1,4 @@
-from rest_framework import viewsets
+from rest_framework import viewsets, status
 from rest_framework.permissions import IsAuthenticated
 # from rest_framework.authtoken.views import ObtainAuthToken
 # from rest_framework.authtoken.models import Token
@@ -54,10 +54,21 @@ class ClientAccountChartViewSet(viewsets.ModelViewSet):
 
 
 class AccountViewSet(viewsets.ModelViewSet):
-    def get_queryset(self):
-        print(self.kwargs)
-        return Account.objects.filter(account_chart=self.kwargs['accountchart_pk'])
     serializer_class = AccountSerializer
+
+    def get_queryset(self):
+        return Account.objects.filter(account_chart=self.kwargs['accountchart_pk'])
+    
+    def create(self, request, *args, **kwargs):
+        if isinstance(request.data, list):  # Check if it's a list of objects
+            serializer = self.get_serializer(data=request.data, many=True)
+        else:
+            serializer = self.get_serializer(data=request.data)
+
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
 
 class CategoryViewSet(viewsets.ModelViewSet):

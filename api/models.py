@@ -47,7 +47,7 @@ class Account(models.Model):
     category = models.ForeignKey('Category', on_delete=models.PROTECT, null=True, default=None)
 
     def __str__(self):
-        return self.name
+        return f"{self.name} ({self.id})"
     
 class Category(models.Model):
     BALANCE = "BA"
