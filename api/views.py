@@ -55,8 +55,21 @@ class ClientAccountChartViewSet(viewsets.ModelViewSet):
 
 class AccountViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
+        print(self.kwargs)
         return Account.objects.filter(account_chart=self.kwargs['accountchart_pk'])
     serializer_class = AccountSerializer
+
+    # def create(self, request, *args, **kwargs):
+    #     print(self.request.data)
+
+    #     serializer = self.serializer_class(data=request.data)
+
+    #     # print("fielnames", serializer.get_field_names)
+
+    #     if serializer.is_valid():
+    #         print(serializer.data)
+    #     else:
+    #         print(serializer.errors)
 
 # class UserLogIn(ObtainAuthToken):
 

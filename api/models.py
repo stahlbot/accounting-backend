@@ -36,14 +36,14 @@ class AccountChart(models.Model):
     client = models.OneToOneField(Client, on_delete=models.CASCADE, null=True, default=None)
 
     def __str__(self):
-        return self.name
+        return f"{self.name} ({self.id})"
     
 
 class Account(models.Model):
     name =  models.CharField(max_length=128, default="Default")
     number = models.IntegerField(default=0)
     non_deductible_tax = models.BooleanField(default=False)
-    account_chart = models.ForeignKey('AccountChart', on_delete=models.CASCADE)
+    account_chart = models.ForeignKey('AccountChart', on_delete=models.CASCADE, null=True)
 
     def __str__(self):
         return self.name

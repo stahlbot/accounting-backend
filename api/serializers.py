@@ -55,10 +55,12 @@ class AccountChartSerializer(serializers.ModelSerializer):
 
 
 class AccountSerializer(serializers.ModelSerializer):
+    accountChart = serializers.PrimaryKeyRelatedField(queryset=AccountChart.objects.all(), source='account_chart')
+    nonDeductibleTax = serializers.BooleanField(source='non_deductible_tax')
 
     class Meta:
         model = Account
-        fields = ('id', 'name', 'number', 'account_chart')
+        fields = ('id', 'name', 'number', 'nonDeductibleTax', 'accountChart')
 
 
 # class OptionalPrimaryKeyRelatedField(serializers.PrimaryKeyRelatedField):
