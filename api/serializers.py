@@ -73,7 +73,7 @@ class CategorySerializer(serializers.ModelSerializer):
 
 class BookingSerializer(serializers.ModelSerializer):
     createdAt = serializers.DateTimeField(source='created_at', required=False)
-    invoiceNr = serializers.CharField(source = "invoice_nr", allow_null=True, required=False)
+    invoiceNr = serializers.CharField(source = "invoice_nr", allow_null=True, required=False, allow_blank=True)
     isCommited = serializers.BooleanField(source='is_commited')
     class Meta:
         model = Booking
