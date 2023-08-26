@@ -4,7 +4,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.views.generic.base import RedirectView
 from rest_framework.routers import DefaultRouter
-from api.views import AccountChartViewSet, AccountViewSet, CategoryViewSet, UserViewSet, ClientsViewSet, ClientAccountChartViewSet
+from api.views import AccountChartViewSet, AccountViewSet, BookingViewSet, CategoryViewSet, UserViewSet, ClientsViewSet, ClientAccountChartViewSet
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
@@ -18,17 +18,25 @@ router.register(r'clients', ClientsViewSet)
 router.register(r'account-charts', AccountChartViewSet)
 router.register(r'categories', CategoryViewSet)
 
+# This router is not even used
+# clients/:client_id/account-charts
 client_account_charts_router = routers.NestedSimpleRouter(router, r'clients', lookup='client')
 client_account_charts_router.register(r'account-charts', ClientAccountChartViewSet, basename='client-account-charts')
 
+# account-charts/:account_chart_id/accounts
 account_chart_accounts_router = routers.NestedSimpleRouter(router, r'account-charts', lookup='accountchart')
 account_chart_accounts_router.register(r'accounts', AccountViewSet, basename='account-chart-accounts')
+
+# clients/:client_id/bookings
+client_bookings_router = routers.NestedSimpleRouter(router, r"clients", lookup="client")
+client_bookings_router.register(r'bookings', BookingViewSet, basename="client-bookings")
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1/', include(router.urls)),
     path('api/v1/', include(client_account_charts_router.urls)),
     path('api/v1/', include(account_chart_accounts_router.urls)),
+    path('api/v1/', include(client_bookings_router.urls)),
     # path('api-user-login/', UserLogIn.as_view()),
     # path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 

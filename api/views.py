@@ -5,8 +5,8 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.decorators import action
 
-from .models import Account, AccountChart, Category, User, Client
-from .serializers import AccountChartSerializer, AccountSerializer, CategorySerializer, UserSerializer, ClientSerializer
+from .models import Account, AccountChart, Booking, Category, User, Client
+from .serializers import AccountChartSerializer, AccountSerializer, BookingSerializer, CategorySerializer, UserSerializer, ClientSerializer
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -74,6 +74,13 @@ class AccountViewSet(viewsets.ModelViewSet):
 class CategoryViewSet(viewsets.ModelViewSet):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
+
+class BookingViewSet(viewsets.ModelViewSet):
+    serializer_class = BookingSerializer
+
+    def get_queryset(self):
+        return Booking.objects.filter(client=self.kwargs['client_pk'])
+    
 
     # def create(self, request, *args, **kwargs):
     #     print(self.request.data)

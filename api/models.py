@@ -62,3 +62,15 @@ class Category(models.Model):
 
     def __str__(self):
         return f"{self.document}: {self.name}"
+    
+
+class Booking(models.Model):
+    debit = models.ForeignKey('Account', on_delete=models.PROTECT, related_name='debit_bookings')
+    credit = models.ForeignKey('Account', on_delete=models.PROTECT, related_name='credit_bookings')
+    value = models.FloatField()
+    date = models.DateField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    text = models.CharField(max_length=1024, null=True, default=None)
+    invoice_nr = models.CharField(max_length=128, null=True, default=None)
+    client = models.ForeignKey('Client', on_delete=models.CASCADE)
+    is_commited = models.BooleanField(default=False)
